@@ -1,0 +1,44 @@
+services:
+  db-service:
+    image: postgres:15.5-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=db
+      - POSTGRES_PORT=5432
+      - TZ=America/Fortaleza
+    networks:
+      - db-net
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: 'pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB'
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # app:
+  #   restart: always
+  #   build:
+  #     context: .
+  #   ports:
+  #     - 3000:3000
+  #   environment:
+  #     - DATABASE_URL=postgresql://user:password@db-service:5432/db
+  #     - NPM_RUN_COMMAND=npm run migrate:dev
+  #   networks:
+  #     - db-net
+  #     - app-new
+  #   depends_on:
+  #     - db-service
+
+networks:
+  db-net:
+  app-new:
+
+volumes:
+  pg-data:
+    driver: local
