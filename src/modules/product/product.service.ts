@@ -11,12 +11,82 @@ export class ProductService {
     return this.usersRepository.create(product);
   }
 
-  getProducts() {
-    return this.usersRepository.findAll();
+  async getProducts(
+    page: number = 1,
+    perPage: number = 10,
+    order: 'desc' | 'asc',
+  ) {
+    const offset = (page - 1) * perPage;
+    const products = await this.usersRepository.findAll(offset, perPage, order);
+
+    const totalProducts = await this.usersRepository.count();
+    const pageCount = Math.ceil(totalProducts / perPage);
+    const productCount = products.length;
+    let hasNextPage = false;
+    let hasPrevPage = false;
+    let nextPage = '';
+    let prevPage = '';
+
+    if (offset + productCount < totalProducts) {
+      nextPage = `/users?page=${page + 1}&perPage=${perPage}`;
+      hasNextPage = true;
+    }
+
+    if (page > 1 && (page - 1) * perPage > 0) {
+      prevPage = `/users?page=${page - 1}&perPage=${perPage}`;
+      hasPrevPage = true;
+    }
+
+    return {
+      products,
+      productCount,
+      pageCount,
+      hasNextPage,
+      hasPrevPage,
+      nextPage,
+      prevPage,
+    };
   }
 
-  getSpecialProducts() {
-    return this.usersRepository.specialProducts();
+  async getSpecialProducts(
+    page: number = 1,
+    perPage: number = 10,
+    order: 'desc' | 'asc',
+  ) {
+    const offset = (page - 1) * perPage;
+    const products = await this.usersRepository.specialProducts(
+      offset,
+      perPage,
+      order,
+    );
+
+    const totalProducts = await this.usersRepository.countSpecialProducts();
+    const pageCount = Math.ceil(totalProducts / perPage);
+    const productCount = products.length;
+    let hasNextPage = false;
+    let hasPrevPage = false;
+    let nextPage = '';
+    let prevPage = '';
+
+    if (offset + productCount < totalProducts) {
+      nextPage = `/users?page=${page + 1}&perPage=${perPage}`;
+      hasNextPage = true;
+    }
+
+    if (page > 1 && (page - 1) * perPage > 0) {
+      prevPage = `/users?page=${page - 1}&perPage=${perPage}`;
+      hasPrevPage = true;
+    }
+
+    return {
+      products,
+      productCount,
+      pageCount,
+      hasNextPage,
+      hasPrevPage,
+      nextPage,
+      prevPage,
+    };
   }
 
   updateProduct(id: number, product: UpdateProductDTO) {

@@ -6,6 +6,18 @@ import { UpdateProductDTO } from '../dtos/updateProduct.dto';
 
 @Injectable()
 export class UsersRepository {
+  private readonly specialProductRule = {
+    OR: [
+      { is_new: true },
+      {
+        AND: [
+          { discount_price: { not: null } },
+          { discount_percent: { not: null } },
+        ],
+      },
+    ],
+  };
+
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(data: ProductDTO) {
@@ -27,22 +39,27 @@ export class UsersRepository {
     }
   }
 
-  async findAll() {
-    return await this.prismaService.product.findMany();
+  async findAll(offset: number, perPage: number, order: Prisma.SortOrder) {
+    return await this.prismaService.product.findMany({
+      skip: offset,
+      take: perPage,
+      orderBy: {
+        id: order,
+      },
+    });
   }
 
-  async specialProducts() {
+  async specialProducts(
+    offset: number,
+    perPage: number,
+    order: Prisma.SortOrder,
+  ) {
     return await this.prismaService.product.findMany({
-      where: {
-        OR: [
-          { is_new: true },
-          {
-            AND: [
-              { discount_price: { not: null } },
-              { discount_percent: { not: null } },
-            ],
-          },
-        ],
+      where: this.specialProductRule,
+      skip: offset,
+      take: perPage,
+      orderBy: {
+        id: order,
       },
     });
   }
@@ -88,5 +105,15 @@ export class UsersRepository {
       }
       throw new Error('Error while creating the product');
     }
+  }
+
+  async count() {
+    return await this.prismaService.product.count();
+  }
+
+  async countSpecialProducts() {
+    return await this.prismaService.product.count({
+      where: this.specialProductRule,
+    });
   }
 }

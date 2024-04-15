@@ -1,11 +1,14 @@
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductDTO } from './dtos/product.dto';
@@ -21,18 +24,29 @@ export class ProductController {
   }
 
   @Get()
-  getProducts() {
-    return this.productService.getProducts();
+  getProducts(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('perPage', new DefaultValuePipe(10), ParseIntPipe) perPage: number,
+    @Query('order', new DefaultValuePipe('asc')) order: 'asc' | 'desc',
+  ) {
+    return this.productService.getProducts(page, perPage, order);
   }
 
   @Get('special')
-  getNewOrPromotionProducts() {
-    return this.productService.getSpecialProducts();
+  getNewOrPromotionProducts(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('perPage', new DefaultValuePipe(10), ParseIntPipe) perPage: number,
+    @Query('order', new DefaultValuePipe('asc')) order: 'asc' | 'desc',
+  ) {
+    return this.productService.getSpecialProducts(page, perPage, order);
   }
 
   @Patch(':id')
-  updateProduct(@Param('id') id: string, @Body() product: UpdateProductDTO) {
-    return this.productService.updateProduct(+id, product);
+  updateProduct(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() product: UpdateProductDTO,
+  ) {
+    return this.productService.updateProduct(id, product);
   }
 
   @Delete(':id')

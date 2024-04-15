@@ -20,20 +20,20 @@ PATCH http://localhost:3000/api/v1/products/4
 Content-Type: application/json
 
 {
-  "name": "Galaxy S21 - Black"
+  "name": "Galaxy A55 - Black"
 }
 
 
 
 ### Get all products
-GET http://localhost:3000/api/v1/products
+GET http://localhost:3000/api/v1/products?page=1&perPage=4&order=desc
 
 
 
 ### Get special products
-GET http://localhost:3000/api/v1/products/special
+GET http://localhost:3000/api/v1/products/special?page=1&perPage=2&order=desc
 
 
 
-### Delete special products
+### Delete product
 Delete http://localhost:3000/api/v1/products/8
