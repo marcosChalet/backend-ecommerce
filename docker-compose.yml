@@ -20,20 +20,20 @@ services:
       timeout: 5s
       retries: 5
 
-  # app:
-  #   restart: always
-  #   build:
-  #     context: .
-  #   ports:
-  #     - 3000:3000
-  #   environment:
-  #     - DATABASE_URL=postgresql://user:password@db-service:5432/db
-  #     - NPM_RUN_COMMAND=npm run migrate:dev
-  #   networks:
-  #     - db-net
-  #     - app-new
-  #   depends_on:
-  #     - db-service
+  app:
+    restart: always
+    build:
+      context: .
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_URL=postgresql://user:password@db-service:5432/db
+      - NPM_RUN_COMMAND=npm run start:migrate:dev
+    networks:
+      - db-net
+      - app-new
+    depends_on:
+      - db-service
 
 networks:
   db-net:
