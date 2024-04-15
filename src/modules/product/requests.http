@@ -1,0 +1,39 @@
+### Add new product
+POST http://localhost:3000/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Galaxy S22 - Black",
+  "sku": "GAL-001-2700-Gre",
+  "category": 1,
+  "description": "Galaxy S21-FE of black color",
+  "large_description": "Galaxy S21-FE of black color, 256GB of memory and 8GB of RAM.",
+  "price": 2700,
+  "discount_percent": 0.5,
+  "discount_price": 1350
+}
+
+
+
+### Update product
+PATCH http://localhost:3000/api/v1/products/4
+Content-Type: application/json
+
+{
+  "name": "Galaxy S21 - Black"
+}
+
+
+
+### Get all products
+GET http://localhost:3000/api/v1/products
+
+
+
+### Get special products
+GET http://localhost:3000/api/v1/products/special
+
+
+
+### Delete special products
+Delete http://localhost:3000/api/v1/products/8
