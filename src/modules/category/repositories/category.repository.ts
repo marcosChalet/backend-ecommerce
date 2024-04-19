@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/modules/global/prisma/prisma.service';
 import { CategoryDTO } from '../dtos/category.dto';
+import { CategoryListDTO } from '../dtos/categoryList.dto';
 
 @Injectable()
 export class CategoryRepository {
@@ -13,6 +14,12 @@ export class CategoryRepository {
   create(data: CategoryDTO) {
     return this.prismaService.category.create({
       data,
+    });
+  }
+
+  createMany(data: CategoryListDTO) {
+    return this.prismaService.category.createMany({
+      data: data.categories,
     });
   }
 }

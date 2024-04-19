@@ -8,6 +8,27 @@ Content-Type: application/json
 }
 
 
+### Add many categories
+POST http://localhost:3000/api/v1/category/many
+Content-Type: application/json
+
+{
+  "categories": [
+    {
+      "name": "Dining",
+      "image_link": "https://passionshake.com/wp-content/uploads/2022/01/DSC_3348-3-1024x740.jpg"
+    },
+    {
+      "name": "Living",
+      "image_link": "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsb2ZmaWNlNF9waG90b19vZl9hX2ZyYW1lX2luX3RoZV9saXZpbmdfcm9vbV9pbl90aGVfc3R5bF85YWM1MjY1ZS02OTdjLTQ4OWMtYTFmYS03NzgzMjJlMTEwODNfMi5qcGc.jpg"
+    },
+    {
+      "name": "Bedroom",
+      "image_link": "https://i.pinimg.com/736x/cb/d0/91/cbd091752be62a60ed79bc4dd407a1a7.jpg"
+    }
+  ]
+}
+
 
 ### Get all categories
 GET http://localhost:3000/api/v1/category
