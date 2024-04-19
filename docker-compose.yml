@@ -25,7 +25,7 @@ services:
     build:
       context: .
     ports:
-      - 3000:3000
+      - 2000:2000
     environment:
       - DATABASE_URL=postgresql://user:password@db-service:5432/db
       - NPM_RUN_COMMAND=npm run start:migrate:dev

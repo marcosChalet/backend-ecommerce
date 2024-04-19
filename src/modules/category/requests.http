@@ -1,5 +1,5 @@
 ### Add new category
-POST http://localhost:3000/api/v1/category
+POST http://localhost:2000/api/v1/category
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
 
 
 ### Add many categories
-POST http://localhost:3000/api/v1/category/many
+POST http://localhost:2000/api/v1/category/many
 Content-Type: application/json
 
 {
@@ -31,5 +31,5 @@ Content-Type: application/json
 
 
 ### Get all categories
-GET http://localhost:3000/api/v1/category
+GET http://localhost:2000/api/v1/category
 

@@ -1,5 +1,5 @@
 ### Add new product
-POST http://localhost:3000/api/v1/products
+POST http://localhost:2000/api/v1/products
 Content-Type: application/json
 
 {
@@ -16,7 +16,7 @@ Content-Type: application/json
 
 
 ### Update product
-PATCH http://localhost:3000/api/v1/products/4
+PATCH http://localhost:2000/api/v1/products/4
 Content-Type: application/json
 
 {
@@ -26,14 +26,14 @@ Content-Type: application/json
 
 
 ### Get all products
-GET http://localhost:3000/api/v1/products?page=1&perPage=4&order=desc
+GET http://localhost:2000/api/v1/products?page=1&perPage=4&order=desc
 
 
 
 ### Get special products
-GET http://localhost:3000/api/v1/products/special?page=1&perPage=2&order=desc
+GET http://localhost:2000/api/v1/products/special?page=1&perPage=2&order=desc
 
 
 
 ### Delete product
-Delete http://localhost:3000/api/v1/products/8
+Delete http://localhost:2000/api/v1/products/8
