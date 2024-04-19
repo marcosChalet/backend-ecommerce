@@ -37,3 +37,104 @@ GET http://localhost:2000/api/v1/products/special?page=1&perPage=2&order=desc
 
 ### Delete product
 Delete http://localhost:2000/api/v1/products/8
+
+
+
+### Add many products
+POST http://localhost:2000/api/v1/products/many
+Content-Type: application/json
+
+{
+  "products": [
+      {
+      "name": "Syltherine",
+      "sku": "SYL-001-3500000-WHI",
+      "category": 1,
+      "description": "Stylish cafe chair",
+      "large_description": "The Syltherine cafe chair combines style and comfort with its elegant design. Ideal for modern cafes, it offers durability and sophistication, becoming an essential element for any contemporary setting.",
+      "price": 3500000,
+      "discount_price": 2500000,
+      "discount_percent": 0.3,
+      "is_new": false,
+      "image_link": "https://i.postimg.cc/Qtc09hjv/mesa.png",
+      "other_images_link": ""
+    },
+    {
+      "name": "Leviosa",
+      "sku": "LEV-002-2500000-WHI",
+      "category": 2,
+      "description": "Stylish cafe chair",
+      "large_description": "The Leviosa chair provides elegance and ergonomics for cafes. Its modern and comfortable design is perfect for relaxed moments. Ideal for those seeking an inviting atmosphere filled with style.",
+      "price": 2500000,
+      "image_link": "https://i.postimg.cc/sDmH4j5r/cadeira.png",
+      "other_images_link": ""
+    },
+    {
+      "name": "Lolito",
+      "sku": "LOL-001-7000000-WHI",
+      "category": 1,
+      "description": "Luxury big sofa",
+      "large_description": "The Lolito sofa offers unparalleled luxury and comfort. With its spacious design and soft cushions, it's perfect for relaxing in style. An essential piece for those seeking a touch of opulence in their living room.",
+      "price": 14000000,
+      "discount_price": 7000000,
+      "discount_percent": 0.5,
+      "image_link": "https://i.postimg.cc/kGcsss6c/sofa-grande.png",
+      "other_images_link": ""
+    },
+    {
+      "name": "Respira",
+      "sku": "RES-002-500000-BEI",
+      "category": 2,
+      "description": "Outdoor bar table and stool",
+      "large_description": "The Respira table and stool set is ideal for outdoor areas. Its sturdy and minimalist design seamlessly integrates into any outdoor environment, providing moments of leisure and relaxation with elegance.",
+      "price": 500000,
+      "is_new": true,
+      "image_link": "https://i.postimg.cc/y8WjhFVm/sofa-sala.png",
+      "other_images_link": ""
+    },
+    {
+      "name": "Grifo",
+      "sku": "GRI-003-1500000-WHI",
+      "category": 3,
+      "description": "Night lamp",
+      "large_description": "The Grifo lamp adds charm and brightness to spaces. Its elegant design and soft light create a cozy atmosphere in any room. Perfect for adding a touch of sophistication to your bedroom or living room.",
+      "price": 1500000,
+      "image_link": "https://i.postimg.cc/RV4bt66d/abajur.png",
+      "other_images_link": ""
+    },
+    {
+      "name": "Muggo",
+      "sku": "MUG-002-150000-BEI",
+      "category": 2,
+      "description": "Small mug",
+      "large_description": "The Muggo mug combines practicality and style. With its compact design and ergonomic handle, it's perfect for daily use. A charming choice to enjoy your favorite beverages with comfort and elegance.",
+      "price": 150000,
+      "is_new": true,
+      "image_link": "https://i.postimg.cc/Z5gcwCR1/sofa.png",
+      "other_images_link": ""
+    },
+    {
+      "name": "Pingky",
+      "sku": "PIN-002-7000000-GRA",
+      "category": 2,
+      "description": "Cute bed set",
+      "large_description": "The Pingky bed set transforms any bedroom into a cozy retreat. Its charming design and soft textures provide a tranquil environment for rest and relaxation. Ideal for a serene and welcoming atmosphere.",
+      "price": 14000000,
+      "discount_price": 7000000,
+      "discount_percent": 0.5,
+      "image_link": "https://i.postimg.cc/DyvBZ9HY/sofa-grande2.png",
+      "other_images_link": ""
+    },
+    {
+      "name": "Potty",
+      "sku": "POT-002-500000-BEI",
+      "category": 2,
+      "description": "Minimalist flower pot",
+      "large_description": "The Potty vase adds a touch of elegance to any space. Its minimalist design and versatile size make it perfect for displaying your favorite plants. A charming option to add a touch of greenery and style to your home.",
+      "price": 500000,
+      "is_new": true,
+      "image_link": "https://i.postimg.cc/3Jt9DLHr/sofa-pequeno.png",
+      "other_images_link": ""
+    }
+  ]
+}

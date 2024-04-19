@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UsersRepository } from './repositories/product.repository';
 import { ProductDTO } from './dtos/product.dto';
 import { UpdateProductDTO } from './dtos/updateProduct.dto';
+import { ProductListDTO } from './dtos/productList.dto';
 
 @Injectable()
 export class ProductService {
@@ -9,6 +10,10 @@ export class ProductService {
 
   addProduct(product: ProductDTO) {
     return this.usersRepository.create(product);
+  }
+
+  addManyProduct(product: ProductListDTO) {
+    return this.usersRepository.createMany(product);
   }
 
   async getProducts(

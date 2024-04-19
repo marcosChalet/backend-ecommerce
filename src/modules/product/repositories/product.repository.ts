@@ -3,6 +3,7 @@ import { PrismaService } from 'src/modules/global/prisma/prisma.service';
 import { ProductDTO } from '../dtos/product.dto';
 import { Prisma } from '@prisma/client';
 import { UpdateProductDTO } from '../dtos/updateProduct.dto';
+import { ProductListDTO } from '../dtos/productList.dto';
 
 @Injectable()
 export class UsersRepository {
@@ -33,6 +34,29 @@ export class UsersRepository {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2025') {
           throw new Error(`The category ${data.category} does not exist!`);
+        }
+      }
+      throw new Error('Error while creating the product');
+    }
+  }
+
+  async createMany(data: ProductListDTO) {
+    try {
+      const productData = data.products.map((product) => {
+        const { category, ...filteredData } = product;
+        return {
+          ...filteredData,
+          category_id: category,
+        };
+      });
+      return await this.prismaService.product.createMany({
+        data: productData,
+        skipDuplicates: true,
+      });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new Error(`Any category does not exist!`);
         }
       }
       throw new Error('Error while creating the product');

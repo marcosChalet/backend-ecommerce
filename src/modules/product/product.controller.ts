@@ -13,6 +13,7 @@ import {
 import { ProductService } from './product.service';
 import { ProductDTO } from './dtos/product.dto';
 import { UpdateProductDTO } from './dtos/updateProduct.dto';
+import { ProductListDTO } from './dtos/productList.dto';
 
 @Controller('api/v1/products')
 export class ProductController {
@@ -21,6 +22,11 @@ export class ProductController {
   @Post()
   addProduct(@Body() product: ProductDTO) {
     return this.productService.addProduct(product);
+  }
+
+  @Post('many')
+  addManyProducts(@Body() product: ProductListDTO) {
+    return this.productService.addManyProduct(product);
   }
 
   @Get()
