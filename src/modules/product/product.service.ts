@@ -45,6 +45,7 @@ export class ProductService {
     return {
       products,
       productCount,
+      totalProducts,
       pageCount,
       hasNextPage,
       hasPrevPage,
