@@ -68,7 +68,7 @@ export class UsersRepository {
       skip: offset,
       take: perPage,
       orderBy: {
-        id: order,
+        price: order,
       },
     });
   }
