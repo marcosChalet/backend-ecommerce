@@ -73,6 +73,17 @@ export class UsersRepository {
     });
   }
 
+  async findOne(id: number) {
+    return (
+      await this,
+      this.prismaService.product.findUnique({
+        where: {
+          id,
+        },
+      })
+    );
+  }
+
   async specialProducts(
     offset: number,
     perPage: number,

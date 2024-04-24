@@ -95,6 +95,10 @@ export class ProductService {
     };
   }
 
+  findOneProduct(id: number) {
+    return this.usersRepository.findOne(id);
+  }
+
   updateProduct(id: number, product: UpdateProductDTO) {
     return this.usersRepository.update(id, product);
   }

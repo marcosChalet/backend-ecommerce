@@ -47,6 +47,11 @@ export class ProductController {
     return this.productService.getSpecialProducts(page, perPage, order);
   }
 
+  @Get(':id')
+  findProduct(@Param('id', ParseIntPipe) id: number) {
+    return this.productService.findOneProduct(id);
+  }
+
   @Patch(':id')
   updateProduct(
     @Param('id', ParseIntPipe) id: number,
