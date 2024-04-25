@@ -54,6 +54,22 @@ export class ProductService {
     };
   }
 
+  async getOurProducts() {
+    const p = await this.usersRepository.findOurProducts();
+    const ourProducts = p.map((obj: any) => {
+      return obj.product;
+    });
+    return ourProducts;
+  }
+
+  async getRelatedProducts() {
+    const p = await this.usersRepository.findRelatedProducts();
+    const ourProducts = p.map((obj: any) => {
+      return obj.product;
+    });
+    return ourProducts;
+  }
+
   async getSpecialProducts(
     page: number = 1,
     perPage: number = 10,

@@ -28,6 +28,8 @@ export class UsersRepository {
         data: {
           ...filteredData,
           category: { connect: { id: category } },
+          colors: { connect: data.colors.map((colorId) => ({ id: colorId })) },
+          sizes: { connect: data.sizes.map((sizeId) => ({ id: sizeId })) },
         },
       });
     } catch (error) {
@@ -42,18 +44,11 @@ export class UsersRepository {
 
   async createMany(data: ProductListDTO) {
     try {
-      const productData = data.products.map((product) => {
-        const { category, ...filteredData } = product;
-        return {
-          ...filteredData,
-          category_id: category,
-        };
-      });
-      return await this.prismaService.product.createMany({
-        data: productData,
-        skipDuplicates: true,
+      return data.products.map(async (product: ProductDTO) => {
+        return await this.create(product);
       });
     } catch (error) {
+      console.log(error);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2025') {
           throw new Error(`Any category does not exist!`);
@@ -70,6 +65,34 @@ export class UsersRepository {
       orderBy: {
         price: order,
       },
+      include: {
+        colors: {
+          select: {
+            color_hex: true,
+          },
+        },
+        sizes: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+  }
+
+  async findOurProducts() {
+    return await this.prismaService.ourProducts.findMany({
+      select: {
+        product: true,
+      },
+    });
+  }
+
+  async findRelatedProducts() {
+    return await this.prismaService.relatedProducts.findMany({
+      select: {
+        product: true,
+      },
     });
   }
 
@@ -79,6 +102,18 @@ export class UsersRepository {
       this.prismaService.product.findUnique({
         where: {
           id,
+        },
+        include: {
+          colors: {
+            select: {
+              color_hex: true,
+            },
+          },
+          sizes: {
+            select: {
+              name: true,
+            },
+          },
         },
       })
     );
@@ -95,6 +130,18 @@ export class UsersRepository {
       take: perPage,
       orderBy: {
         id: order,
+      },
+      include: {
+        colors: {
+          select: {
+            color_hex: true,
+          },
+        },
+        sizes: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
   }

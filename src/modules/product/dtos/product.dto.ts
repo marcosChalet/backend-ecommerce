@@ -1,4 +1,5 @@
 import {
+  IsArray,
   IsBoolean,
   IsNotEmpty,
   IsNumber,
@@ -7,11 +8,11 @@ import {
   MaxLength,
   Validate,
 } from 'class-validator';
-import { ErrorMessagesHelper } from 'src/helpers/messages.helper';
 import {
   IntervalDiscountField,
   existenceDiscountFields,
 } from './constraints.validator';
+import { ErrorMessagesHelper } from 'src/helpers/messages.helper';
 
 export class ProductDTO {
   @IsNotEmpty({ message: ErrorMessagesHelper('name').EMPTY_FIELD })
@@ -37,8 +38,8 @@ export class ProductDTO {
 
   @IsNotEmpty({ message: ErrorMessagesHelper('large_description').EMPTY_FIELD })
   @IsString({ message: ErrorMessagesHelper('large_description').IS_NOT_TEXT })
-  @MaxLength(500, {
-    message: ErrorMessagesHelper('large_description').MAX_500_CHARACTERS,
+  @MaxLength(1000, {
+    message: ErrorMessagesHelper('large_description').MAX_1000_CHARACTERS,
   })
   large_description: string;
 
@@ -57,6 +58,16 @@ export class ProductDTO {
   @IsOptional()
   @IsBoolean({ message: ErrorMessagesHelper('is_new').NOT_BOOLEAN })
   is_new?: boolean;
+
+  @IsOptional()
+  @IsArray()
+  @IsNumber({}, { each: true })
+  colors?: number[];
+
+  @IsOptional()
+  @IsArray()
+  @IsNumber({}, { each: true })
+  sizes?: number[];
 
   @IsOptional()
   @IsString({ message: ErrorMessagesHelper('image_link').IS_NOT_TEXT })
