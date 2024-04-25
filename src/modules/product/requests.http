@@ -3,14 +3,17 @@ POST http://localhost:2000/api/v1/products
 Content-Type: application/json
 
 {
-  "name": "Galaxy S22 - Black",
-  "sku": "GAL-001-2700-Gre",
-  "category": 1,
-  "description": "Galaxy S21-FE of black color",
-  "large_description": "Galaxy S21-FE of black color, 256GB of memory and 8GB of RAM.",
-  "price": 2700,
-  "discount_percent": 0.5,
-  "discount_price": 1350
+  "name": "Stellar Sofa",
+  "sku": "STE-002-9000000-BLU",
+  "category": 2,
+  "description": "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+  "large_description": "Embodying the raw, wayward spirit of rock ‘n’ roll, the Kilburn portable active stereo speaker takes the unmistakable look and sound of Marshall, unplugs the chords, and takes the show on the road.\nWeighing in under 7 pounds, the Kilburn is a lightweight piece of vintage styled engineering. Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound that is both articulate and pronounced. The analogue knobs allow you to fine tune the controls to your personal preferences while the guitar-influenced leather strap enables easy and stylish travel.",
+  "price": 9000000,
+  "is_new": true,
+  "colors": [1,2,3],
+  "sizes": [2,3,5,7],
+  "image_link": "https://i.postimg.cc/KYM5wx34/sofas.png",
+  "other_images_link": "https://i.postimg.cc/XYD2ts21/miniatura1-sofa.png;https://i.postimg.cc/XYvH2Rgy/miniatura2-sofa.png;https://i.postimg.cc/DzJCh1Hv/miniatura3-sofa.png;https://i.postimg.cc/KY608Rhn/miniatura4-sofa.png"
 }
 
 
@@ -56,6 +59,8 @@ Content-Type: application/json
       "discount_price": 2500000,
       "discount_percent": 0.3,
       "is_new": false,
+      "colors": [1,2,3],
+      "sizes": [2,3,5,7],
       "image_link": "https://i.postimg.cc/Qtc09hjv/mesa.png",
       "other_images_link": ""
     },
@@ -66,6 +71,8 @@ Content-Type: application/json
       "description": "Stylish cafe chair",
       "large_description": "The Leviosa chair provides elegance and ergonomics for cafes. Its modern and comfortable design is perfect for relaxed moments. Ideal for those seeking an inviting atmosphere filled with style.",
       "price": 2500000,
+      "colors": [1,2,3],
+      "sizes": [2,3,5,7],
       "image_link": "https://i.postimg.cc/sDmH4j5r/cadeira.png",
       "other_images_link": ""
     },
@@ -78,6 +85,8 @@ Content-Type: application/json
       "price": 14000000,
       "discount_price": 7000000,
       "discount_percent": 0.5,
+      "colors": [1,2,3],
+      "sizes": [2,3,5,7],
       "image_link": "https://i.postimg.cc/kGcsss6c/sofa-grande.png",
       "other_images_link": ""
     },
@@ -89,6 +98,8 @@ Content-Type: application/json
       "large_description": "The Respira table and stool set is ideal for outdoor areas. Its sturdy and minimalist design seamlessly integrates into any outdoor environment, providing moments of leisure and relaxation with elegance.",
       "price": 500000,
       "is_new": true,
+      "colors": [1,2,3],
+      "sizes": [2,3,5,7],
       "image_link": "https://i.postimg.cc/y8WjhFVm/sofa-sala.png",
       "other_images_link": ""
     },
@@ -99,6 +110,8 @@ Content-Type: application/json
       "description": "Night lamp",
       "large_description": "The Grifo lamp adds charm and brightness to spaces. Its elegant design and soft light create a cozy atmosphere in any room. Perfect for adding a touch of sophistication to your bedroom or living room.",
       "price": 1500000,
+      "colors": [1,2,3],
+      "sizes": [2,3,5,7],
       "image_link": "https://i.postimg.cc/RV4bt66d/abajur.png",
       "other_images_link": ""
     },
@@ -110,6 +123,8 @@ Content-Type: application/json
       "large_description": "The Muggo mug combines practicality and style. With its compact design and ergonomic handle, it's perfect for daily use. A charming choice to enjoy your favorite beverages with comfort and elegance.",
       "price": 150000,
       "is_new": true,
+      "colors": [1,2,3],
+      "sizes": [2,3,5,7],
       "image_link": "https://i.postimg.cc/Z5gcwCR1/sofa.png",
       "other_images_link": ""
     },
@@ -122,6 +137,8 @@ Content-Type: application/json
       "price": 14000000,
       "discount_price": 7000000,
       "discount_percent": 0.5,
+      "colors": [1,2,3],
+      "sizes": [2,3,5,7],
       "image_link": "https://i.postimg.cc/DyvBZ9HY/sofa-grande2.png",
       "other_images_link": ""
     },
@@ -133,8 +150,22 @@ Content-Type: application/json
       "large_description": "The Potty vase adds a touch of elegance to any space. Its minimalist design and versatile size make it perfect for displaying your favorite plants. A charming option to add a touch of greenery and style to your home.",
       "price": 500000,
       "is_new": true,
+      "colors": [1,2,3],
+      "sizes": [2,3,5,7],
       "image_link": "https://i.postimg.cc/3Jt9DLHr/sofa-pequeno.png",
       "other_images_link": ""
+    },
+    {
+      "name": "Stellar Sofa",
+      "sku": "STE-002-9000000-BLU",
+      "category": 2,
+      "description": "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+      "large_description": "Embodying the raw, wayward spirit of rock ‘n’ roll, the Kilburn portable active stereo speaker takes the unmistakable look and sound of Marshall, unplugs the chords, and takes the show on the road.\n\nWeighing in under 7 pounds, the Kilburn is a lightweight piece of vintage styled engineering. Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound that is both articulate and pronounced. The analogue knobs allow you to fine tune the controls to your personal preferences while the guitar-influenced leather strap enables easy and stylish travel.",
+      "price": 9000000,
+      "colors": [1,2,3],
+      "sizes": [2,3,5,7],
+      "image_link": "https://i.postimg.cc/KYM5wx34/sofas.png",
+      "other_images_link": "https://i.postimg.cc/XYD2ts21/miniatura1-sofa.png;https://i.postimg.cc/XYvH2Rgy/miniatura2-sofa.png;https://i.postimg.cc/DzJCh1Hv/miniatura3-sofa.png;https://i.postimg.cc/KY608Rhn/miniatura4-sofa.png"
     }
   ]
 }
