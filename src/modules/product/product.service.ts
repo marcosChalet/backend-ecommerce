@@ -24,7 +24,7 @@ export class ProductService {
     category: number,
   ) {
     const offset = (page - 1) * perPage;
-    let filter = {} as any;
+    let filter = { where: {} } as any;
 
     filter = {
       orderBy: {
@@ -40,9 +40,10 @@ export class ProductService {
     }
 
     if (orderType === 'discount_percent') {
-      filter.where = {
-        discount_percent: {
-          not: null,
+      filter.orderBy = {
+        discount_price: {
+          sort: 'desc',
+          nulls: 'last',
         },
       };
     }
