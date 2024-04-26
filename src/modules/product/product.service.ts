@@ -20,9 +20,39 @@ export class ProductService {
     page: number = 1,
     perPage: number = 10,
     order: 'desc' | 'asc',
+    orderType: 'price' | 'discount_percent',
+    category: number,
   ) {
     const offset = (page - 1) * perPage;
-    const products = await this.usersRepository.findAll(offset, perPage, order);
+    let filter = {} as any;
+
+    filter = {
+      orderBy: {
+        [orderType]: order,
+      },
+      where: {},
+    };
+
+    if (category > 0) {
+      filter.where = {
+        category_id: category,
+      };
+    }
+
+    if (orderType === 'discount_percent') {
+      filter.where = {
+        discount_percent: {
+          not: null,
+        },
+      };
+    }
+
+    const products = await this.usersRepository.findAll(
+      offset,
+      perPage,
+      filter.orderBy as never,
+      filter.where as never,
+    );
 
     const totalProducts = await this.usersRepository.count();
     const pageCount = Math.ceil(totalProducts / perPage);

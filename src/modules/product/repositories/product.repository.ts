@@ -58,13 +58,12 @@ export class UsersRepository {
     }
   }
 
-  async findAll(offset: number, perPage: number, order: Prisma.SortOrder) {
+  async findAll(offset: number, perPage: number, orderBy: never, where: never) {
     return await this.prismaService.product.findMany({
       skip: offset,
       take: perPage,
-      orderBy: {
-        price: order,
-      },
+      orderBy,
+      where,
       include: {
         colors: {
           select: {

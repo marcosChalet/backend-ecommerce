@@ -34,8 +34,18 @@ export class ProductController {
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('perPage', new DefaultValuePipe(10), ParseIntPipe) perPage: number,
     @Query('order', new DefaultValuePipe('asc')) order: 'asc' | 'desc',
+    @Query('category', new DefaultValuePipe(-1), ParseIntPipe)
+    category: number,
+    @Query('orderType', new DefaultValuePipe('price'))
+    orderType: 'price' | 'discount_percent',
   ) {
-    return this.productService.getProducts(page, perPage, order);
+    return this.productService.getProducts(
+      page,
+      perPage,
+      order,
+      orderType,
+      category,
+    );
   }
 
   @Get('our-products')
