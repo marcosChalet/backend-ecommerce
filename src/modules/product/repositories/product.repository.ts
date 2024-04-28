@@ -192,6 +192,14 @@ export class UsersRepository {
     return await this.prismaService.product.count();
   }
 
+  async countByCategory(category_id: number) {
+    return await this.prismaService.product.count({
+      where: {
+        category_id,
+      },
+    });
+  }
+
   async countSpecialProducts() {
     return await this.prismaService.product.count({
       where: this.specialProductRule,

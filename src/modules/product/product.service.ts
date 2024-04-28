@@ -55,21 +55,20 @@ export class ProductService {
       filter.where as never,
     );
 
-    let totalProducts = await this.usersRepository.count();
-    let productCount = totalProducts;
+    const productCount = products.length;
     let hasNextPage = false;
     let hasPrevPage = false;
+    let totalProducts;
     let nextPage = '';
     let prevPage = '';
 
-    let pageCount;
     if (category > 0) {
-      productCount = products.length;
-      totalProducts = products.length;
-      pageCount = Math.ceil(products.length / perPage);
+      totalProducts = await this.usersRepository.countByCategory(category);
     } else {
-      pageCount = Math.ceil(totalProducts / perPage);
+      totalProducts = await this.usersRepository.count();
     }
+
+    const pageCount = Math.ceil(totalProducts / perPage);
 
     if (offset + productCount < totalProducts) {
       nextPage = `/users?page=${page + 1}&perPage=${perPage}`;
