@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { promisify } from 'util';
 import { readFile } from 'fs';
 import { render } from 'mustache';
+import { join } from 'path';
 
 const readFileAsync = promisify(readFile);
 
@@ -17,7 +18,7 @@ export class EmailUtils {
   private async loadTemplate(): Promise<void> {
     try {
       this.template = await readFileAsync(
-        'src/modules/email/templates/order-confirmed.html',
+        join(__dirname, 'templates', 'newsletter.html'),
         'utf8',
       );
       this.logger.debug('Template loaded successfully.');
