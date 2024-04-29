@@ -8,14 +8,6 @@ datasource db {
   shadowDatabaseUrl = env("DATABASE_URL")
 }
 
-model RelatedProducts {
-  id           Int      @id @default(autoincrement())
-  product      Product  @relation(fields: [product_id], references: [id])
-  product_id   Int
-  created_date DateTime @default(now())
-  updated_date DateTime @updatedAt
-}
-
 model OurProducts {
   id           Int      @id @default(autoincrement())
   product      Product  @relation(fields: [product_id], references: [id])
@@ -43,7 +35,6 @@ model Product {
   created_date      DateTime          @default(now())
   updated_date      DateTime          @updatedAt
   OurProducts       OurProducts[]
-  RelatedProducts   RelatedProducts[]
 }
 
 model Size {

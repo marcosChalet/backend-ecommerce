@@ -53,11 +53,6 @@ export class ProductController {
     return this.productService.getOurProducts();
   }
 
-  @Get('related-products')
-  getRelatedProducts() {
-    return this.productService.getRelatedProducts();
-  }
-
   @Get('special')
   getNewOrPromotionProducts(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,

@@ -146,10 +146,3 @@ INSERT INTO "OurProducts" (product_id, updated_date) VALUES
 (7, NOW()),
 (8, NOW()),
 (9, NOW());
-
-INSERT INTO "RelatedProducts" (product_id, updated_date) VALUES
-(6, NOW()),
-(2, NOW()),
-(7, NOW()),
-(1, NOW());
-

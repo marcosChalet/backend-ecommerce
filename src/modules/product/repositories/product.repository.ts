@@ -87,14 +87,6 @@ export class UsersRepository {
     });
   }
 
-  async findRelatedProducts() {
-    return await this.prismaService.relatedProducts.findMany({
-      select: {
-        product: true,
-      },
-    });
-  }
-
   async findOne(id: number) {
     return (
       await this,
