@@ -3,10 +3,20 @@ import { UsersRepository } from './repositories/product.repository';
 import { ProductDTO } from './dtos/product.dto';
 import { UpdateProductDTO } from './dtos/updateProduct.dto';
 import { ProductListDTO } from './dtos/productList.dto';
+import { SortStrategyManager } from './sort-strategies/sort-strategy.manager';
+
+enum PaginationType {
+  Default = -1,
+  Category,
+  SpecialProducts,
+}
 
 @Injectable()
 export class ProductService {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(
+    private readonly usersRepository: UsersRepository,
+    private readonly sortStrategyManager: SortStrategyManager,
+  ) {}
 
   addProduct(product: ProductDTO) {
     return this.usersRepository.create(product);
@@ -16,6 +26,45 @@ export class ProductService {
     return this.usersRepository.createMany(product);
   }
 
+  getOffset(page: number, perPage: number) {
+    return (page - 1) * perPage;
+  }
+
+  async getPagination(
+    paginationType: PaginationType,
+    category: number,
+    page: number,
+    perPage: number,
+    numProducts: number,
+  ) {
+    const offset = this.getOffset(page, perPage);
+    let totalProducts: number = 0;
+
+    switch (paginationType) {
+      case PaginationType.Category:
+        totalProducts = await this.usersRepository.countByCategory(category);
+        break;
+      case PaginationType.SpecialProducts:
+        totalProducts = await this.usersRepository.countSpecialProducts();
+        break;
+      default:
+        totalProducts = await this.usersRepository.count();
+    }
+
+    const pageCount = Math.ceil(totalProducts / perPage);
+    const hasNextPage = offset + numProducts < totalProducts;
+    const hasPrevPage = page > 1 && this.getOffset(page, perPage) > 0;
+
+    return {
+      totalProducts,
+      pageCount,
+      hasNextPage,
+      hasPrevPage,
+      nextPage: hasNextPage ? `/users?page=${page + 1}&perPage=${perPage}` : '',
+      prevPage: hasPrevPage ? `/users?page=${page - 1}&perPage=${perPage}` : '',
+    };
+  }
+
   async getProducts(
     page: number = 1,
     perPage: number = 10,
@@ -23,29 +72,15 @@ export class ProductService {
     orderType: 'price' | 'discount_percent',
     category: number,
   ) {
-    const offset = (page - 1) * perPage;
-    let filter = { where: {} } as any;
+    const offset = this.getOffset(page, perPage);
+    const sortCriteria = this.sortStrategyManager
+      .getStrategy(orderType)
+      .getSortCriteria(order);
 
-    filter = {
-      orderBy: {
-        [orderType]: order,
-      },
-      where: {},
-    };
+    const filter = { orderBy: sortCriteria, where: {} } as any;
 
     if (category > 0) {
-      filter.where = {
-        category_id: category,
-      };
-    }
-
-    if (orderType === 'discount_percent') {
-      filter.orderBy = {
-        discount_price: {
-          sort: 'desc',
-          nulls: 'last',
-        },
-      };
+      filter.where = { category_id: category };
     }
 
     const products = await this.usersRepository.findAll(
@@ -55,40 +90,18 @@ export class ProductService {
       filter.where as never,
     );
 
-    const productCount = products.length;
-    let hasNextPage = false;
-    let hasPrevPage = false;
-    let totalProducts;
-    let nextPage = '';
-    let prevPage = '';
-
-    if (category > 0) {
-      totalProducts = await this.usersRepository.countByCategory(category);
-    } else {
-      totalProducts = await this.usersRepository.count();
-    }
-
-    const pageCount = Math.ceil(totalProducts / perPage);
-
-    if (offset + productCount < totalProducts) {
-      nextPage = `/users?page=${page + 1}&perPage=${perPage}`;
-      hasNextPage = true;
-    }
-
-    if (page > 1 && (page - 1) * perPage > 0) {
-      prevPage = `/users?page=${page - 1}&perPage=${perPage}`;
-      hasPrevPage = true;
-    }
+    const pagination = await this.getPagination(
+      category > 0 ? PaginationType.Category : PaginationType.Default,
+      category,
+      page,
+      perPage,
+      products.length,
+    );
 
     return {
       products,
-      productCount,
-      totalProducts,
-      pageCount,
-      hasNextPage,
-      hasPrevPage,
-      nextPage,
-      prevPage,
+      productCount: products.length,
+      pagination,
     };
   }
 
@@ -105,39 +118,25 @@ export class ProductService {
     perPage: number = 10,
     order: 'desc' | 'asc',
   ) {
-    const offset = (page - 1) * perPage;
+    const offset = this.getOffset(page, perPage);
     const products = await this.usersRepository.specialProducts(
       offset,
       perPage,
       order,
     );
 
-    const totalProducts = await this.usersRepository.countSpecialProducts();
-    const pageCount = Math.ceil(totalProducts / perPage);
-    const productCount = products.length;
-    let hasNextPage = false;
-    let hasPrevPage = false;
-    let nextPage = '';
-    let prevPage = '';
-
-    if (offset + productCount < totalProducts) {
-      nextPage = `/users?page=${page + 1}&perPage=${perPage}`;
-      hasNextPage = true;
-    }
-
-    if (page > 1 && (page - 1) * perPage > 0) {
-      prevPage = `/users?page=${page - 1}&perPage=${perPage}`;
-      hasPrevPage = true;
-    }
+    const pagination = await this.getPagination(
+      PaginationType.SpecialProducts,
+      -1,
+      page,
+      perPage,
+      products.length,
+    );
 
     return {
       products,
-      productCount,
-      pageCount,
-      hasNextPage,
-      hasPrevPage,
-      nextPage,
-      prevPage,
+      productCount: products.length,
+      pagination,
     };
   }
 
