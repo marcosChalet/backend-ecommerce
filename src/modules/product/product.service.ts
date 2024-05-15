@@ -4,6 +4,7 @@ import { ProductDTO } from './dtos/product.dto';
 import { UpdateProductDTO } from './dtos/updateProduct.dto';
 import { ProductListDTO } from './dtos/productList.dto';
 import { SortStrategyManager } from './sort-strategies/sort-strategy.manager';
+import { FilterBuilder } from './filters/filter.bilder';
 
 enum PaginationType {
   Default = -1,
@@ -16,6 +17,7 @@ export class ProductService {
   constructor(
     private readonly usersRepository: UsersRepository,
     private readonly sortStrategyManager: SortStrategyManager,
+    private readonly filterBuilder: FilterBuilder,
   ) {}
 
   addProduct(product: ProductDTO) {
@@ -70,7 +72,9 @@ export class ProductService {
     perPage: number = 10,
     order: 'desc' | 'asc',
     orderType: 'price' | 'discount_percent',
-    category: number,
+    category: number = 1,
+    maxPrice: number | null = null,
+    minPrice: number | null = null,
   ) {
     const offset = this.getOffset(page, perPage);
     const sortCriteria = this.sortStrategyManager
@@ -78,10 +82,12 @@ export class ProductService {
       .getSortCriteria(order);
 
     const filter = { orderBy: sortCriteria, where: {} } as any;
-
-    if (category > 0) {
-      filter.where = { category_id: category };
-    }
+    filter.where = this.filterBuilder
+      .setCategory(category > 0 ? category : null)
+      .setMinPrice(minPrice)
+      .setMaxPrice(maxPrice)
+      .build()
+      .getFilters();
 
     const products = await this.usersRepository.findAll(
       offset,
