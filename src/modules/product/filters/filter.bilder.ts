@@ -1,4 +1,5 @@
 type FilterType = { [key: string]: any };
+type ColorType = { color_hex: string };
 
 class Filter {
   public filtersList: FilterType[] = [];
@@ -54,6 +55,24 @@ export class FilterBuilder {
   public setCategory(category: number | null) {
     if (category) {
       this.filter.filtersList.push({ category_id: category });
+    }
+    return this;
+  }
+
+  public setColors(colors: string[] | null) {
+    if (colors) {
+      const listObjColors: ColorType[] = [];
+      colors.map((color: string) => {
+        listObjColors.push({ color_hex: color });
+      });
+
+      this.filter.filtersList.push({
+        colors: {
+          some: {
+            OR: listObjColors,
+          },
+        },
+      });
     }
     return this;
   }

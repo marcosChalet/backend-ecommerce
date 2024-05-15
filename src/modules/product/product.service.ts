@@ -75,6 +75,7 @@ export class ProductService {
     category: number = 1,
     maxPrice: number | null = null,
     minPrice: number | null = null,
+    colors: string[] | null = null,
   ) {
     const offset = this.getOffset(page, perPage);
     const sortCriteria = this.sortStrategyManager
@@ -86,6 +87,7 @@ export class ProductService {
       .setCategory(category > 0 ? category : null)
       .setMinPrice(minPrice)
       .setMaxPrice(maxPrice)
+      .setColors(colors)
       .build()
       .getFilters();
 
