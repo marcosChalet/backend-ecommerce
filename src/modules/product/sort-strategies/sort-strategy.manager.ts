@@ -10,7 +10,7 @@ export class SortStrategyManager {
     this.strategies['discount_percent'] = new DiscountSortStrategy();
   }
 
-  getStrategy(orderType: 'price' | 'discount_percent'): SortStrategy {
-    return this.strategies[orderType];
+  getStrategy(orderBy: 'price' | 'discount_percent'): SortStrategy {
+    return this.strategies[orderBy];
   }
 }
