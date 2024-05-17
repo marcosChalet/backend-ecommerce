@@ -70,8 +70,8 @@ export class ProductService {
   async getProducts(
     page: number = 1,
     perPage: number = 10,
-    order: 'desc' | 'asc',
-    orderType: 'price' | 'discount_percent',
+    sortType: 'desc' | 'asc',
+    orderBy: 'price' | 'discount_percent',
     category: number = 1,
     maxPrice: number | null = null,
     minPrice: number | null = null,
@@ -79,8 +79,12 @@ export class ProductService {
   ) {
     const offset = this.getOffset(page, perPage);
     const sortCriteria = this.sortStrategyManager
-      .getStrategy(orderType)
-      .getSortCriteria(order);
+      .getStrategy(orderBy)
+      .getSortCriteria(sortType);
+
+    if (colors) {
+      colors = colors.map((color) => `#${color}`);
+    }
 
     const filter = { orderBy: sortCriteria, where: {} } as any;
     filter.where = this.filterBuilder

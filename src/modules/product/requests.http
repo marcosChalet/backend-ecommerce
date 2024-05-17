@@ -28,13 +28,24 @@ Content-Type: application/json
 
 
 
-### Get all products
-GET http://localhost:2000/api/v1/products?page=1&perPage=4&order=desc
+### Get products with default query (sort by price asc, first page, 16 products)
+GET http://localhost:2000/api/v1/products/
+
+
+
+### Get products (second page, 3 products, sort strategy discount percent,
+###  price between 3500000 and 14000000, include color #000000 and #B88E2F)
+GET http://localhost:2000/api/v1/products?page=2&perPage=3&orderBy=discount_percent&minPrice=3500000&maxPrice=14000000&colors=000000&colors=B88E2F
+
+
+
+### Get products
+GET http://localhost:2000/api/v1/products?page=1&perPage=4&orderBy=desc
 
 
 
 ### Get special products
-GET http://localhost:2000/api/v1/products/special?page=1&perPage=2&order=desc
+GET http://localhost:2000/api/v1/products/special?page=1&perPage=2&orderBy=desc
 
 
 
