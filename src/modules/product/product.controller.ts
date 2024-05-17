@@ -14,6 +14,7 @@ import { ProductService } from './product.service';
 import { ProductDTO } from './dtos/product.dto';
 import { UpdateProductDTO } from './dtos/updateProduct.dto';
 import { ProductListDTO } from './dtos/productList.dto';
+import { GetProductsDto } from './dtos/getProducts.dto';
 
 @Controller('api/v1/products')
 export class ProductController {
@@ -30,21 +31,27 @@ export class ProductController {
   }
 
   @Get()
-  getProducts(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-    @Query('perPage', new DefaultValuePipe(10), ParseIntPipe) perPage: number,
-    @Query('order', new DefaultValuePipe('asc')) order: 'asc' | 'desc',
-    @Query('category', new DefaultValuePipe(-1), ParseIntPipe)
-    category: number,
-    @Query('orderType', new DefaultValuePipe('price'))
-    orderType: 'price' | 'discount_percent',
-  ) {
+  getProducts(@Query() query: GetProductsDto) {
+    const {
+      page,
+      perPage,
+      sortType,
+      orderBy,
+      category,
+      maxPrice,
+      minPrice,
+      colors,
+    } = query;
+
     return this.productService.getProducts(
       page,
       perPage,
-      order,
-      orderType,
+      sortType,
+      orderBy,
       category,
+      maxPrice,
+      minPrice,
+      colors,
     );
   }
 
