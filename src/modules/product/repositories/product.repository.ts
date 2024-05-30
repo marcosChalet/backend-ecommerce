@@ -61,7 +61,7 @@ export class UsersRepository {
   async findAll(offset: number, perPage: number, orderBy: never, where: never) {
     return await this.prismaService.product.findMany({
       relationLoadStrategy: 'join',
-      cursor: { id: offset + 1 },
+      skip: offset,
       take: perPage,
       orderBy,
       where,
