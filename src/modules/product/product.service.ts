@@ -69,10 +69,10 @@ export class ProductService {
 
   async getProducts(
     page: number = 1,
-    perPage: number = 10,
+    perPage: number = 16,
     sortType: 'desc' | 'asc',
     orderBy: 'price' | 'discount_percent',
-    category: number = 1,
+    category: number = -1,
     maxPrice: number | null = null,
     minPrice: number | null = null,
     colors: string[] | null = null,
